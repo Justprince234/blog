@@ -1,0 +1,35 @@
+{% extends 'blog_app/base.html' %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <h4>Search Results;</h4>
+</div>
+<div class="container">
+        <div class="row">
+                <div class="col-md-8 mt-3 left">
+                        {% for item in search_results %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ item.title }}</h2>
+                                <p class="card-text text-muted h6">{{ item.author }} | {{ item.created_on}} </p>
+                                <img src="{{item.images.url}}" width="250em" height="250em" alt="">
+                                <p class="card-text">{{ item.content|slice:":200" }}</p>
+                                {% for post in posts %}
+                                <a href="{% url 'blog_app:post_detail' post.slug %}" class="btn btn-primary">Read More &rarr;</a>
+                                {% endfor %}
+                            </div>
+                            </div>
+                            {% empty %}
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                <p class="card-text text-muted h6"> No result found for: {{query}} </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                </div>
+            {% block sidebar %} {% include 'blog_app/sidebar.html' %} {% endblock sidebar %}
+        </div>
+</div>
+
+
+
+{% endblock %}

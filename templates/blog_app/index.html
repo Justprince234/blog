@@ -1,0 +1,58 @@
+{% extends "blog_app/base.html" %} 
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+    
+    .head_text {
+        color: white;
+    }
+    
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to Princewill's Nugget </h3>
+                    <p class="text-light">Thoughts Galllore!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        
+        <div class="col-md-8 mt-3 left">
+            {% for post in posts %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <img src="{{post.images.url}}" width="250em" height="250em" alt="">
+                    <p class="card-text">{{post.content|slice:":200" }}</p>
+                    <p>{{ post.author }} | {{ post.created_on.date }} &nbsp;</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'blog_app:post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                    {% else %}
+                    <a href="{% url 'account:login' %}" class="btn btn-primary">Read More &rarr;</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% block sidebar %} {% include 'blog_app/sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+
+
+{% endblock %}

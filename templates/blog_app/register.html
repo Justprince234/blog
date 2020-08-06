@@ -1,0 +1,54 @@
+{% extends "blog_app/base.html" %} 
+{% block content %}
+<body>
+    
+    <div style="text-align: center; margin-top: 50px;">
+            <h2 style="color: blue">Register</h2>
+    </div>
+    <div class="row" style="margin-top: 80px;">
+        <div class="col-md-4 offset-4">
+            {% for message in messages %}
+            <p style="color: red">{{message}}</p>
+            {% endfor %}
+                <form action="{% url 'account:register' %}" method="POST">
+                  {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">First name</label>
+                            <input type="text" name="first_name" class="form-control" id="validationDefault01" placeholder="First name" required>
+                        </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="validationDefault02">Last name</label>
+                            <input type="text" name="last_name" class="form-control" id="validationDefault02" placeholder="Last name" required>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault01">Username</label>
+                            <input type="text" name="username" class="form-control" id="validationDefault01" placeholder="Username" required>
+                        </div>
+                              <div class="col-md-6 mb-3">
+                                <label for="validationDefault02">E-mail</label>
+                                <input type="email" name="email" class="form-control" id="validationDefault02" placeholder="E-mail" required>
+                              </div>
+                    </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label for="validationDefault03">Password</label>
+                            <input type="password" name="password" class="form-control" id="validationDefault03" placeholder="Password" required>
+                          </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationDefault03">Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" id="validationDefault03" placeholder="Confirm Password" required>
+                        </div>
+                        
+                          
+                        </div>
+                      
+                        <button class="btn btn-primary" type="submit">Register</button>
+                </form>
+        </div>
+
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Princewill's Nugget</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"crossorigin="anonymous" />
+
+
+</head>
+<body>
+    <style>
+        body {
+        font-family: "Roboto", sans-serif;
+        font-size: 17px;
+        background-color: #fdfdfd;
+    }
+    .shadow {
+        box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+    }
+    .btn-danger {
+        color: #fff;
+        background-color: #f00000;
+        border-color: #dc281e;
+    }
+    .masthead {
+        background: #3398E1;
+        height: auto;
+        padding-bottom: 15px;
+        box-shadow: 0 16px 48px #E3E7EB;
+        padding-top: 10px;
+    }
+</style>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow" id="mainNav">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="{% url 'blog_app:home' %}">Princewill's Nugget</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                      <li>
+                          <a class="nav-link text-white font-weight-bold">Welcome {{user.first_name}}</a>
+                      </li>
+                      <li class="nav-item text-white">
+                          <a class="nav-link text-white font-weight-bold" onclick="return confirm('Confirm Logout')" href="{% url 'account:logout' %}">logout</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-8 card mb-4  mt-3 left  top">
+            <div class="card-body">
+              <h1>{% block title %} {{ post.title }} {% endblock title %}</h1>
+              <img src="{{post.images.url}}" width="250em" height="250em" alt="">
+              <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
+              <p class="card-text ">{{ post.content | safe }}</p>
+      
+              <small><p>
+                Category:&nbsp;
+               
+                <a href="{% url 'blog_app:blog_category' post.category.slug %}">
+                  {{ post.category.name }}
+                </a>&nbsp;
+                
+              </p></small>
+            </div>
+          </div>
+          {% block sidebar %} {% include 'blog_app/sidebar.html' %} {% endblock sidebar %}
+          <div class="col-md-8 card mb-4  mt-3 ">
+            <div class="card-body">
+              <!-- comments -->
+              <h2>{{ comments.count }} comments</h2>
+      
+              {% for comment in comments %}
+              <div class="comments" style="padding: 5px;">
+                <p class="font-weight-bold">
+                  {{ user.first_name }}
+                  <span class=" text-muted font-weight-normal">
+                    {{ comment.created_on }}
+                  </span>
+                </p>
+                {{ comment.body | linebreaks }}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="col-md-8 card mb-4  mt-3 ">
+            <div class="card-body">
+              <h3>Leave a comment</h3>
+              {% load crispy_forms_tags %}
+              <form method="post" style="margin-top: 1.0em;">
+                {{ comment_form | crispy }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  
+</body>
+</html>
+
